@@ -190,6 +190,18 @@
       user-select: none;
     }
     .food-item .food-emoji { font-size: 30px; }
+    .golgappe-emoji { position: relative; display: inline-block; }
+    .gp-drop {
+      position: absolute;
+      font-size: 14px;
+      bottom: -4px;
+      right: -6px;
+      animation: drip 1.6s ease-in-out infinite;
+    }
+    @keyframes drip {
+      0%,100% { transform: translateY(0);   opacity: 1; }
+      60%      { transform: translateY(4px); opacity: 0.6; }
+    }
     .food-item .food-name  { font-size: 11px; font-weight: 600; color: var(--sub); }
     .food-item:hover       { border-color: var(--pink2); background: #ffe8f5; transform: scale(1.05); }
     .food-item.selected    {
@@ -395,7 +407,7 @@
     { e: '🍝', n: 'Pasta'       },
     { e: '🌮', n: 'Tacos'       },
     { e: '🍜', n: 'Ramen'       },
-    { e: '💧', n: 'Golgappe'    },
+    { e: '🫧', n: 'Golgappe'    },
     { e: '🥘', n: 'Chaat'       },
     { e: '🫓', n: 'Pav Bhaji'   },
     { e: '🥟', n: 'Momos'       },
@@ -575,7 +587,10 @@
   FOODS.forEach(f => {
     const div = document.createElement('div');
     div.className = 'food-item';
-    div.innerHTML = `<span class="food-emoji">${f.e}</span><span class="food-name">${f.n}</span>`;
+    const emojiHtml = f.n === 'Golgappe'
+      ? `<span class="food-emoji golgappe-emoji">🫙<span class="gp-drop">💦</span></span>`
+      : `<span class="food-emoji">${f.e}</span>`;
+    div.innerHTML = `${emojiHtml}<span class="food-name">${f.n}</span>`;
     div.addEventListener('click', () => {
       const key = f.n;
       if (selectedFoods.has(key)) {
@@ -651,11 +666,12 @@
     try {
       await fetch(SLACK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'payload=' + encodeURIComponent(JSON.stringify(slackBody))
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(slackBody)
       });
-    } catch (_) {
-      /* best-effort */
+    } catch (err) {
+      console.error('Slack send error:', err);
     }
 
     btn.style.display = 'none';
