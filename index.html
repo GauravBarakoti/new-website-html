@@ -26,36 +26,43 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Quicksand',sans-se
 @keyframes sparkleFloat{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:.6;transform:translateY(-12px)}}
 
 /* ═══════ SECTION 0: CUPID ═══════ */
-#s-cupid{background:linear-gradient(180deg,#3a2a2a 0%,#f5e6d8 18%,#fdf0e8 50%,#fce8d8 100%)}
-.cupid-subtitle{font-family:'Dancing Script',cursive;font-size:clamp(18px,4.5vw,26px);color:#c4856c;margin-bottom:clamp(16px,4vw,30px);z-index:2}
-.cupid-scene{position:relative;width:min(340px,85vw);height:min(340px,55vh);display:flex;align-items:center;justify-content:center}
+#s-cupid{background:#f5ebe3}
+.cupid-subtitle{font-family:'Dancing Script',cursive;font-size:clamp(20px,5vw,28px);color:#b07060;margin-bottom:clamp(8px,2vh,16px);z-index:2}
+.cupid-scene{position:relative;width:min(380px,92vw);height:min(480px,68vh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,3vh,28px)}
 
-/* 3D-ish SVG heart */
-.heart-glow{position:relative;z-index:3}
-.heart-glow::before{content:'';position:absolute;inset:-50px;border-radius:50%;background:radial-gradient(circle,rgba(255,150,170,.45) 0%,transparent 70%);animation:heartPulseGlow 3.5s infinite ease-in-out}
+/* Target heart */
+.heart-glow{position:relative;z-index:3;flex-shrink:0}
+.heart-glow::before{content:'';position:absolute;inset:-45px;border-radius:50%;background:radial-gradient(circle,rgba(255,150,170,.4) 0%,transparent 70%);animation:heartPulseGlow 3.5s infinite ease-in-out}
 @keyframes heartPulseGlow{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.12);opacity:1}}
-.main-heart{position:relative;z-index:2;width:clamp(90px,22vw,120px);height:clamp(80px,20vw,110px);animation:heartBounce 3.5s infinite ease-in-out}
+.main-heart{position:relative;z-index:2;width:clamp(88px,24vw,118px);height:clamp(80px,22vw,106px);animation:heartBounce 3.5s infinite ease-in-out}
 @keyframes heartBounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
-.main-heart svg{width:100%;height:100%;filter:drop-shadow(0 8px 20px rgba(232,70,124,.45))}
+.main-heart svg{width:100%;height:100%;filter:drop-shadow(0 10px 24px rgba(232,70,124,.4))}
 .main-heart.hit{animation:heartHit .6s ease-out forwards}
-@keyframes heartHit{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes heartHit{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
 
-/* Bow — smaller, cleaner */
-.bow-container{position:absolute;bottom:12%;left:8%;width:clamp(60px,15vw,80px);height:clamp(60px,15vw,80px);cursor:pointer;z-index:4;transition:transform .2s}
-.bow-container:active{transform:scale(.95)}
-.bow-container.disabled{pointer-events:none;opacity:.5}
-.bow-svg{width:100%;height:100%;overflow:visible}
-.bow-float{animation:bowFloat 4s infinite ease-in-out;transform-origin:center}
-@keyframes bowFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
-/* Flying arrow — small, smooth arc */
-.flying-arrow{position:fixed;width:36px;height:8px;pointer-events:none;z-index:999;opacity:0}
-.flying-arrow svg{width:100%;height:100%}
-.flying-arrow.shoot{opacity:1;animation:arrowFly 0.8s cubic-bezier(.4,.0,.2,1) forwards}
-@keyframes arrowFly{
-  0%{offset-distance:0%}
-  100%{offset-distance:100%}
+/* Cute 3D bow + arrow (reference style) */
+.bow-container{
+  position:relative;width:clamp(210px,58vw,300px);height:clamp(168px,46vw,240px);
+  cursor:pointer;z-index:4;flex-shrink:0;
+  transform-origin:50% 55%;
+  transition:transform .15s ease;
+  filter:drop-shadow(0 12px 28px rgba(90,50,30,.18));
 }
+.bow-container.disabled{pointer-events:none;opacity:.55}
+.bow-container:not(.disabled):active .bow-float{transform:scale(.96)}
+.bow-svg{width:100%;height:100%;overflow:visible}
+.bow-float{animation:bowFloat 4.5s infinite ease-in-out;transform-origin:center}
+@keyframes bowFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.bow-container.shooting .nocked-arrow{opacity:0;transition:opacity .15s}
+
+/* Flying arrow — gold heart tip + pink fletching */
+.flying-arrow{
+  position:fixed;width:clamp(100px,28vw,140px);height:clamp(28px,8vw,40px);
+  pointer-events:none;z-index:999;opacity:0;
+  transform-origin:8% 50%;
+  filter:drop-shadow(0 4px 8px rgba(90,50,30,.2));
+}
+.flying-arrow svg{width:100%;height:100%}
 
 .heart-sparkle{position:absolute;width:6px;height:6px;background:#ffd700;border-radius:50%;opacity:0;pointer-events:none}
 .heart-sparkle.pop{animation:sparklePop .8s ease-out forwards}
@@ -235,7 +242,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Quicksand',sans-se
 
 @media(max-width:480px){
   .tree-container{margin-bottom:120px}
-  .bow-container{bottom:14%;left:6%}
+  .cupid-scene{height:min(440px,72vh)}
   #s-balloons{padding-top:3vh}
 }
 </style>
@@ -269,13 +276,47 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Quicksand',sans-se
       </div>
     </div>
     <div class="bow-container" id="bowContainer">
-      <svg class="bow-svg bow-float" viewBox="0 0 80 80">
-        <path d="M12 40 Q40 10 68 40" fill="none" stroke="#6d3a1f" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M12 40 Q40 70 68 40" fill="none" stroke="#6d3a1f" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="12" y1="40" x2="68" y2="40" stroke="#8b6914" stroke-width="1.2"/>
-        <!-- Arrow on string -->
-        <line id="bowArrowShaft" x1="14" y1="40" x2="60" y2="40" stroke="#5a3a2a" stroke-width="2"/>
-        <polygon id="bowArrowHead" points="60,40 68,36 68,44" fill="#5a3a2a"/>
+      <svg class="bow-svg bow-float" viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bowWood" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a86535"/>
+            <stop offset="45%" stop-color="#7a4520"/>
+            <stop offset="100%" stop-color="#5c3218"/>
+          </linearGradient>
+          <linearGradient id="bowWoodHi" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#c88850"/>
+            <stop offset="100%" stop-color="#6d4020"/>
+          </linearGradient>
+          <linearGradient id="goldHeart" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffe566"/>
+            <stop offset="100%" stop-color="#e8a820"/>
+          </linearGradient>
+          <linearGradient id="pinkFeather" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff8eb5"/>
+            <stop offset="100%" stop-color="#e8467c"/>
+          </linearGradient>
+        </defs>
+        <!-- Bow limbs -->
+        <path d="M48 90 Q120 18 192 90" fill="none" stroke="url(#bowWood)" stroke-width="14" stroke-linecap="round"/>
+        <path d="M48 90 Q120 162 192 90" fill="none" stroke="url(#bowWood)" stroke-width="14" stroke-linecap="round"/>
+        <path d="M48 90 Q120 18 192 90" fill="none" stroke="url(#bowWoodHi)" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+        <!-- Grip -->
+        <rect x="108" y="74" width="24" height="32" rx="6" fill="#3d2210"/>
+        <rect x="112" y="78" width="16" height="24" rx="4" fill="#2a1608" opacity=".5"/>
+        <!-- String -->
+        <line x1="48" y1="90" x2="192" y2="90" stroke="#c8c0b8" stroke-width="1.5"/>
+        <!-- Nocked arrow -->
+        <g class="nocked-arrow" id="nockedArrow">
+          <line x1="52" y1="90" x2="168" y2="90" stroke="#6d4020" stroke-width="4" stroke-linecap="round"/>
+          <!-- Pink fletching -->
+          <path d="M52 90 Q34 68 28 76 Q36 86 52 90Z" fill="url(#pinkFeather)"/>
+          <path d="M52 90 Q34 112 28 104 Q36 94 52 90Z" fill="url(#pinkFeather)"/>
+          <!-- White wings -->
+          <ellipse cx="158" cy="82" rx="10" ry="6" fill="#fff" opacity=".92"/>
+          <ellipse cx="158" cy="98" rx="10" ry="6" fill="#fff" opacity=".92"/>
+          <!-- Gold heart tip -->
+          <path id="arrowTip" d="M178 90 C172 78 160 78 160 88 C160 98 178 108 178 108 C178 98 196 88 196 88 C196 78 184 78 178 90Z" fill="url(#goldHeart)" stroke="#d49410" stroke-width=".5"/>
+        </g>
       </svg>
     </div>
   </div>
@@ -284,10 +325,23 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Quicksand',sans-se
 </div>
 
 <div class="flying-arrow" id="flyingArrow">
-  <svg viewBox="0 0 36 8">
-    <line x1="0" y1="4" x2="28" y2="4" stroke="#5a3a2a" stroke-width="1.5"/>
-    <polygon points="28,4 36,4 32,1" fill="#5a3a2a"/>
-    <polygon points="28,4 36,4 32,7" fill="#5a3a2a"/>
+  <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="flyGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffe566"/>
+        <stop offset="100%" stop-color="#e8a820"/>
+      </linearGradient>
+      <linearGradient id="flyPink" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff8eb5"/>
+        <stop offset="100%" stop-color="#e8467c"/>
+      </linearGradient>
+    </defs>
+    <line x1="8" y1="20" x2="88" y2="20" stroke="#6d4020" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M8 20 Q-2 6 -6 12 Q0 18 8 20Z" fill="url(#flyPink)"/>
+    <path d="M8 20 Q-2 34 -6 28 Q0 22 8 20Z" fill="url(#flyPink)"/>
+    <ellipse cx="82" cy="14" rx="8" ry="5" fill="#fff" opacity=".92"/>
+    <ellipse cx="82" cy="26" rx="8" ry="5" fill="#fff" opacity=".92"/>
+    <path d="M98 20 C92 10 82 10 82 18 C82 26 98 34 98 34 C98 26 114 18 114 18 C114 10 104 10 98 20Z" fill="url(#flyGold)" stroke="#d49410" stroke-width=".5"/>
   </svg>
 </div>
 
@@ -483,6 +537,39 @@ function goTo(idx){
 function nextSection(){if(currentSection<sections.length-1)goTo(currentSection+1)}
 
 // ─── CUPID BOW & ARROW ───
+function aimBow(){
+  const bow=document.getElementById('bowContainer');
+  const tip=document.getElementById('arrowTip');
+  const heart=document.getElementById('heartTarget');
+  if(!bow||!tip||!heart||bow.classList.contains('disabled'))return;
+
+  const tipPt=tip.getBoundingClientRect();
+  const heartPt=heart.getBoundingClientRect();
+  const tipX=tipPt.left+tipPt.width/2;
+  const tipY=tipPt.top+tipPt.height/2;
+  const heartX=heartPt.left+heartPt.width/2;
+  const heartY=heartPt.top+heartPt.height/2;
+
+  const bowRect=bow.getBoundingClientRect();
+  const bowCx=bowRect.left+bowRect.width/2;
+  const bowCy=bowRect.top+bowRect.height*.55;
+
+  // SVG arrow points right (0°); rotate bow so tip aims at heart
+  const aimAngle=Math.atan2(heartY-bowCy,heartX-bowCx)*(180/Math.PI);
+  bow.dataset.aimAngle=aimAngle;
+  bow.style.transform=`rotate(${aimAngle}deg)`;
+}
+
+function getArrowTipPoint(){
+  const tip=document.getElementById('arrowTip');
+  if(tip){
+    const r=tip.getBoundingClientRect();
+    return{x:r.left+r.width/2,y:r.top+r.height/2};
+  }
+  const bow=document.getElementById('bowContainer').getBoundingClientRect();
+  return{x:bow.right-20,y:bow.top+bow.height/2};
+}
+
 function shootArrow(){
   if(cupidShot||isTransitioning)return;
   cupidShot=true;
@@ -490,43 +577,44 @@ function shootArrow(){
   const heart=document.getElementById('mainHeart');
   const arrow=document.getElementById('flyingArrow');
   const hint=document.getElementById('cupidHint');
-  bow.classList.add('disabled');
+  bow.classList.add('disabled','shooting');
   hint.textContent='';
 
-  const bowRect=bow.getBoundingClientRect();
+  aimBow();
+  const start=getArrowTipPoint();
   const heartRect=heart.getBoundingClientRect();
-  const startX=bowRect.left+bowRect.width*.85;
-  const startY=bowRect.top+bowRect.height*.5;
   const endX=heartRect.left+heartRect.width/2;
   const endY=heartRect.top+heartRect.height/2;
-  const angle=Math.atan2(endY-startY,endX-startX)*(180/Math.PI);
+  const angle=Math.atan2(endY-start.y,endX-start.x)*(180/Math.PI);
+  const arrowH=arrow.offsetHeight||32;
 
-  // Position at bow tip
-  arrow.style.left=startX+'px';
-  arrow.style.top=(startY-4)+'px';
+  arrow.style.left=(start.x-10)+'px';
+  arrow.style.top=(start.y-arrowH/2)+'px';
   arrow.style.transform=`rotate(${angle}deg)`;
   arrow.style.opacity='1';
   arrow.style.transition='none';
 
-  // Animate to heart with smooth ease
   requestAnimationFrame(()=>{
-    arrow.style.transition='left .7s cubic-bezier(.25,.46,.45,.94), top .7s cubic-bezier(.25,.46,.45,.94)';
-    arrow.style.left=endX+'px';
-    arrow.style.top=(endY-4)+'px';
+    const flyDist=Math.hypot(endX-start.x,endY-start.y);
+    arrow.style.transition=`left ${.65+flyDist/900}s cubic-bezier(.22,.61,.36,1), top ${.65+flyDist/900}s cubic-bezier(.22,.61,.36,1)`;
+    arrow.style.left=(endX-10)+'px';
+    arrow.style.top=(endY-arrowH/2)+'px';
   });
 
+  const hitDelay=900;
   setTimeout(()=>{
     heart.classList.add('hit');
     spawnHeartSparkles(endX,endY);
     showFloatingHearts();
     arrow.style.opacity='0';
-    arrow.style.transition='opacity .2s';
-  },750);
+  },hitDelay);
 
-  setTimeout(nextSection,2000);
+  setTimeout(nextSection,2400);
 }
 
 document.getElementById('bowContainer').addEventListener('click',e=>{e.stopPropagation();shootArrow()});
+window.addEventListener('resize',()=>{if(currentSection===0&&!cupidShot)aimBow()});
+setTimeout(aimBow,150);
 
 function spawnHeartSparkles(x,y){
   for(let i=0;i<12;i++){
@@ -543,14 +631,22 @@ function spawnHeartSparkles(x,y){
 
 // ─── TAP HANDLER ───
 document.addEventListener('click',e=>{
-  if(e.target.closest('.btn,.balloon,.envelope,.music-btn,.bow-container,.carousel-arrow'))return;
+  if(e.target.closest('.btn,.balloon,.envelope,.music-btn,#bowContainer,.carousel-arrow'))return;
   const skip=[4,5,7];
   if(skip.includes(currentSection)||currentSection===6||currentSection===0)return;
   nextSection();
 });
 
 function onSectionEnter(idx){
-  if(idx===0){cupidShot=false}
+  if(idx===0){
+    cupidShot=false;
+    const bow=document.getElementById('bowContainer');
+    bow.classList.remove('disabled','shooting');
+    document.getElementById('nockedArrow').style.opacity='1';
+    document.getElementById('mainHeart').classList.remove('hit');
+    document.getElementById('cupidHint').textContent='tap the bow to start';
+    setTimeout(aimBow,150);
+  }
   if(idx===2)bloomTree();
   if(idx===3)spawnCakeConfetti();
   if(idx===4)spawnBalloons();
