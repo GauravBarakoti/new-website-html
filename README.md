@@ -11,8 +11,7 @@
    - `images/photo4.jpg`
    - `images/photo5.jpg`
    - `images/photo6.jpg`
-4. **(Optional)** Add a `music.mp3` file to the root for background music
-5. **Push to GitHub** and enable GitHub Pages in Settings → Pages → Source: `main` branch
+4. **Push to GitHub** and enable GitHub Pages in Settings → Pages → Source: `main` branch
 
 ## How to Add Photos
 
@@ -22,11 +21,13 @@ To **add or remove photos**, edit the `PHOTOS` array near the top of `index.html
 
 ```js
 const PHOTOS = [
-  { src: "images/photo1.jpg", caption: "🥰 Haaye dil le gayi kudi" },
-  { src: "images/photo2.jpg", caption: "🤩 mashuka" },
+  { src: "images/web/photo1.jpg", caption: "🥰 Haaye dil le gayi kudi" },
+  { src: "images/web/photo2.jpg", caption: "🤩 mashuka" },
   // add more or remove as needed
 ];
 ```
+
+Resized copies used by the site live in `images/web/` (the originals stay in `images/`).
 
 ## How to Customize
 
@@ -41,18 +42,15 @@ Everything is configurable at the top of the `<script>` section in `index.html`:
 
 ## Sections (in order)
 
-1. 💖 Cupid Intro — tap to start, floating hearts
-2. 🎀 Happy Birthday splash — pink gradient
-3. 🌳 Heart Tree — tree blooms with hearts, name + age reveal
-4. 🎂 Birthday Cake — confetti burst
-5. 🎈 Pop the Balloons — 5 tappable balloons with reasons
-6. 📸 Memory Lane — swipeable photo carousel
-7. 💌 Love Letter — envelope opens, typewriter effect
-8. 🎉 Finale — confetti rain, final message
-
-## Background Music
-
-Drop any `.mp3` file in the root folder named `music.mp3`. The music toggle button is in the top-right corner.
+1. Bow — hold and release; the arrow lights the heart
+2. Happy Birthday — the sparks form the words
+3. Heart Tree — grows and blooms, name + age
+4. Cake — blow out the candles
+5. Balloons — each pop releases a note
+6. Memory Lane — tap each polaroid to develop it
+7. Envelope — break the wax seal
+8. Letter — words appear as if being written (tap to show it all)
+9. Finale — tap the sky for fireworks
 
 ## Hosting
 
